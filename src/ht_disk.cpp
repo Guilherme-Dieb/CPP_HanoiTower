@@ -1,5 +1,3 @@
-#pragma once
-
 #include "header/ht_disk.h"
 
 #include <iostream>

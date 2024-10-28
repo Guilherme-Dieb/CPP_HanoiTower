@@ -1,5 +1,9 @@
 #include <iostream>
+//#include "header/log.h"
+#include "header/ht_disk.h"
 
 int main(int, char**){
-    std::cout << "Hello, from HanoiTower!\n";
+    HanoiTower::disk* testDisk = new HanoiTower::disk(0,nullptr,nullptr);
+
+    testDisk->printSize();
 }

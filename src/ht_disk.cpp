@@ -9,31 +9,43 @@ using namespace HanoiTower;
 //GETTERS
 int disk::getSize(){return diskSize;}
 
-disk* disk::getNext(){return nextDisk;}
+disk* disk::getTop(){return topDisk;}
 
-disk* disk::getPrevious(){return previousDisk;}
+disk* disk::getBottom(){return bottomDisk;}
 
 //SETTERS
-void disk::setNext(disk* next)
+void disk::setTop(disk* top)
 {
-    nextDisk = next;
+    topDisk = top;
 }
 
-void disk::setPrevious(disk* previous)
+void disk::setBottom(disk* bottom)
 {
-    previousDisk = previous;
+    bottomDisk = bottom;
 }
 
 //CONSTRUCTOR
-disk::disk(int size, disk* next, disk* previous)
+disk::disk(int size, disk* top, disk* bottom)
 {
     diskSize = size;
-    setNext(next);
-    setPrevious(previous);
+    setTop(top);
+    setBottom(bottom);
+}
+
+disk::disk(int size)
+{
+    diskSize = size;
+    setTop(nullptr);
+    setBottom(nullptr);
 }
 
 //FUNCTIONS
 void disk::printSize()
 {
     std::cout << diskSize << std::endl;
+}
+
+void disk::printDisk()
+{
+    std::cout << diskSize << " ";
 }

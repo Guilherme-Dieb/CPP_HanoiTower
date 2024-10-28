@@ -1,9 +1,14 @@
 #include <iostream>
 //#include "header/log.h"
 #include "header/ht_disk.h"
+#include "header/ht_tower.h"
 
 int main(int, char**){
-    HanoiTower::disk* testDisk = new HanoiTower::disk(0,nullptr,nullptr);
+    HanoiTower::tower* myTower = new HanoiTower::tower(10);
 
-    testDisk->printSize();
+    myTower->printTower();
+
+    std::cout << "" <<std::endl;
+
+    delete myTower;
 }

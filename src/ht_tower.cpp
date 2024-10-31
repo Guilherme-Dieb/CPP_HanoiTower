@@ -1,84 +1,88 @@
-#include <iostream>
-
 #include "header/ht_tower.h"
-#include "header/ht_disk.h"
 
 using namespace HanoiTower;
 
-disk* tower::getTopDisk(){ return topDisk; }
-disk* tower::getBottomDisk(){ return bottomDisk; }
+disk* tower::getTopDisk(){ return _topDisk; }
+disk* tower::getBottomDisk(){ return _bottomDisk; }
 
 //CONTRUCTOR
 tower::tower()
 {
-    towerSize = 0;
-    topDisk = nullptr;
-    bottomDisk = nullptr;
+    _towerSize = 0;
+    _topDisk = nullptr;
+    _bottomDisk = nullptr;
 }
 
 tower::tower(int size)
 {
-    towerSize = 0;
-    
-    for(;size > 0; size--)
+    if(size < 0)
     {
-        addDisk(new disk(size));
+        std::cout << "Tower Initialization Error! Invalid Number of Disks" << std::endl;
     }
+    _topDisk = nullptr;
+    _bottomDisk = nullptr;
+    fillTower(size);
 }
 
 //DESTRUCTOR
 tower::~tower()
 {
-    destroyDisks(topDisk);
+    destroyDisks(_topDisk);
 }
 
 //FUNCTIONS
-void tower::addDisk(disk * diskToAdd)
+void tower::pushDisk(disk * diskToAdd)
 {
     if(diskToAdd == nullptr)
     {
-        std::cout << "Failed to create the disk" << std::endl;
+        std::cout << "Failed to Add the disk" << std::endl;
         return;
     }
-    towerSize++;
+    _towerSize++;
 
-    if(bottomDisk == nullptr)
+    if(_bottomDisk == nullptr)
     {
-        bottomDisk = diskToAdd;
-        topDisk = diskToAdd;
+        _bottomDisk = diskToAdd;
+        _topDisk = diskToAdd;
         return;
     }
 
-    diskToAdd->setBottom(topDisk);
-    topDisk->setTop(diskToAdd);
-    topDisk = diskToAdd;
+    diskToAdd->setBottom(_topDisk);
+    _topDisk->setTop(diskToAdd);
+    _topDisk = diskToAdd;
 }
 
 disk* tower::popDisk()
 {
-    if(towerSize == 0)
+    if(_towerSize == 0)
     {
         std::cout << "Fail to process! The Tower is Empty" << std::endl;
         return nullptr;
     }
 
-    towerSize--;
+    disk* diskToPop = _topDisk;
 
-    disk* diskToPop = topDisk;
+    _topDisk = diskToPop->getBottom();
 
-    topDisk = diskToPop->getBottom();
+    diskToPop->setBottom(nullptr);
 
-    if(towerSize == 0)
+    _towerSize--;
+
+    if(_towerSize == 0)
     {
-        bottomDisk = nullptr;
+        _topDisk = nullptr;
+        _bottomDisk = nullptr;
+        return diskToPop;
     }
+
+    _topDisk->setTop(nullptr);
 
     return diskToPop;
 }
 
 void tower::printSize()
 {
-    std::cout << towerSize << std::endl;
+    std::cout << _towerSize << std::endl;
 }
 
 void tower::printStack(disk* diskToPrint)
@@ -92,7 +96,9 @@ void tower::printStack(disk* diskToPrint)
 
 void tower::printTower()
 {
-    printStack(topDisk);
+    std::cout << config::towerPrefix();
+    printStack(_topDisk);
+    std::cout << config::towerSufix();
 }
 
 void tower::destroyDisks(disk* disk)
@@ -100,6 +106,22 @@ void tower::destroyDisks(disk* disk)
     if(disk == nullptr){ return; }
 
     destroyDisks(disk->getBottom());
-
     delete disk;
+}
+
+void tower::fillTower(int size)
+{
+    if(size <= 0) { return; }
+
+    _towerSize = 0;
+
+    for(;size > 0; size--)
+    {
+        pushDisk(new disk(size));
+    }
+}
+
+int tower::getSize()
+{
+    return _towerSize;
 }

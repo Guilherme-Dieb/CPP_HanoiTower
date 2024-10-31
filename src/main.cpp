@@ -1,14 +1,40 @@
 #include <iostream>
-//#include "header/log.h"
+
 #include "header/ht_disk.h"
 #include "header/ht_tower.h"
+#include "header/ht_game.h"
 
 int main(int, char**){
-    HanoiTower::tower* myTower = new HanoiTower::tower(10);
+    HanoiTower::game* myGame = new HanoiTower::game(3);
+    myGame->printGame();
 
-    myTower->printTower();
+    myGame->move(0, 2);
 
-    std::cout << "" <<std::endl;
+    myGame->printGame();
 
-    delete myTower;
+    myGame->move(0, 1);
+
+    myGame->printGame();
+
+    myGame->move(2, 1);
+
+    myGame->printGame();
+
+    myGame->move(0, 2);
+
+    myGame->printGame();
+
+    myGame->move(1, 0);
+
+    myGame->printGame();
+
+    myGame->move(1, 2);
+
+    myGame->printGame();
+
+    myGame->move(0, 2);
+
+    myGame->printGame();
+
+    delete myGame;
 }

@@ -1,5 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
+#include "ht_config.h"
+
 namespace HanoiTower
 {
     class disk
@@ -20,8 +25,8 @@ namespace HanoiTower
             void printDisk();
 
         private:
-            int diskSize;
-            disk* topDisk;
-            disk* bottomDisk;
+            int _diskSize;
+            disk* _topDisk;
+            disk* _bottomDisk;
     };
 }

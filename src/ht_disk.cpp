@@ -1,4 +1,4 @@
-#include "header/ht_disk.h"
+#include "header/ht_disk.hpp"
 
 using namespace HanoiTower;
 
@@ -25,7 +25,7 @@ disk::disk(int size, disk* top, disk* bottom)
 {
     if(size <= 0)
     {
-        std::cout << "Disk Initialization Error! Size of Disks can't be negative" << std::endl;
+        debug::log("Disk Initialization Error! Size of Disks can't be negative");
     }
     _diskSize = size;
     setTop(top);
@@ -36,11 +36,18 @@ disk::disk(int size)
 {
     if(size <= 0)
     {
-        std::cout << "Initialization Error! Size of Disks can't be negative" << std::endl;
+        debug::log("Initialization Error! Size of Disks can't be negative");
     }
     _diskSize = size;
+    std::cout << "Disk Created: " << size << std::endl;
     setTop(nullptr);
     setBottom(nullptr);
+}
+
+//DESTRUCTOR
+disk::~disk()
+{
+    debug::log("Disk " + std::to_string(_diskSize) + " Destroyed");
 }
 
 //FUNCTIONS

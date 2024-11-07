@@ -1,4 +1,4 @@
-#include "header/ht_tower.h"
+#include "header/ht_tower.hpp"
 
 using namespace HanoiTower;
 
@@ -28,6 +28,7 @@ tower::tower(int size)
 tower::~tower()
 {
     destroyDisks(_topDisk);
+    std::cout<< "tower destroyed" << std::endl;
 }
 
 //FUNCTIONS
@@ -54,7 +55,7 @@ void tower::pushDisk(disk * diskToAdd)
 
 disk* tower::popDisk()
 {
-    if(_towerSize == 0)
+    if(isTowerEmpty())
     {
         std::cout << "Fail to process! The Tower is Empty" << std::endl;
         return nullptr;
@@ -68,7 +69,7 @@ disk* tower::popDisk()
 
     _towerSize--;
 
-    if(_towerSize == 0)
+    if(isTowerEmpty())
     {
         _topDisk = nullptr;
         _bottomDisk = nullptr;
@@ -89,24 +90,34 @@ void tower::printStack(disk* diskToPrint)
 {
     if(diskToPrint == nullptr){ return; }
 
-    printStack(diskToPrint->getBottom());
+    disk* current = diskToPrint;
 
-    diskToPrint->printDisk();
+    while(current != nullptr)
+    {
+        current->printDisk();
+        current = current->getTop();
+    }
 }
 
 void tower::printTower()
 {
     std::cout << config::towerPrefix();
-    printStack(_topDisk);
+    printStack(_bottomDisk);
     std::cout << config::towerSufix();
 }
 
-void tower::destroyDisks(disk* disk)
-{
-    if(disk == nullptr){ return; }
+void tower::destroyDisks(disk* detsroyDisk)
+{    
+    if(detsroyDisk == nullptr){ return; }
 
-    destroyDisks(disk->getBottom());
-    delete disk;
+    disk* current = detsroyDisk;
+
+    while(current!=nullptr)
+    {
+        HanoiTower::disk* toDestroy = current;
+        current = current->getBottom();
+        delete toDestroy;
+    }
 }
 
 void tower::fillTower(int size)
@@ -124,4 +135,11 @@ void tower::fillTower(int size)
 int tower::getSize()
 {
     return _towerSize;
+}
+
+bool tower::isTowerEmpty()
+{
+    if(_towerSize == 0){ return true; }
+
+    return false;
 }

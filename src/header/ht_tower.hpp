@@ -1,8 +1,9 @@
 #pragma once
 
-#include "ht_disk.h"
-#include "ht_tower.h"
-#include "ht_config.h"
+#include "ht_disk.hpp"
+#include "ht_tower.hpp"
+#include "ht_config.hpp"
+#include "debug.hpp"
 
 namespace HanoiTower
 {
@@ -26,6 +27,8 @@ namespace HanoiTower
 
             void printSize();
 
+            bool isTowerEmpty();
+
         private:
             int _towerSize;
             disk* _topDisk;
@@ -35,6 +38,6 @@ namespace HanoiTower
 
             void printStack(disk*);
 
-            void destroyDisks(disk*);
+            void destroyDisks(disk*); 
     };
 }

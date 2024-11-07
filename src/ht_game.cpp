@@ -1,4 +1,4 @@
-#include "header/ht_game.h"
+#include "header/ht_game.hpp"
 
 using namespace HanoiTower;
 
@@ -21,15 +21,19 @@ game::game(int numberOfDisks)
     _towers.reserve(3);
 
     _towers.push_back(new tower(numberOfDisks));
-    
+
     _towers.push_back(new tower());
 
     _towers.push_back(new tower());
+
+
+    std::cout<< _towers.size() <<std::endl;
 }
 
 //DESTRUCTOR
 game::~game()
 {
+    std::cout << "Game destroyed!" << std::endl;
     for(tower* t:_towers)
     {
         delete t;
@@ -52,7 +56,7 @@ void game::printGame()
 
 void HanoiTower::game::move(int origin, int destiny)
 {
-    if(origin < 0 || destiny < 0 || origin > _towers.size() - 1 || destiny > _towers.size() - 1 || origin == destiny)
+   if(origin < 0 || destiny < 0 || origin > _towers.size() - 1 || destiny > _towers.size() - 1 || origin == destiny)
     {
         std::cout << "Invalid Move!" << std::endl;
         return;
@@ -69,5 +73,4 @@ void HanoiTower::game::move(int origin, int destiny)
     tower* destinyTower = _towers[destiny];
 
     destinyTower->pushDisk(originTower->popDisk());
-
 }

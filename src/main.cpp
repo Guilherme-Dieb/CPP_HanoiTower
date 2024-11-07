@@ -1,40 +1,40 @@
 #include <iostream>
 
-#include "header/ht_disk.h"
-#include "header/ht_tower.h"
-#include "header/ht_game.h"
+#include "header/ht_disk.hpp"
+#include "header/ht_tower.hpp"
+#include "header/ht_game.hpp"
 
 int main(int, char**){
-    HanoiTower::game* myGame = new HanoiTower::game(3);
-    myGame->printGame();
+    debug::log("DEBUG VERSION\n");
 
-    myGame->move(0, 2);
+    HanoiTower::game myGame = HanoiTower::game(3);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(0, 2);
 
-    myGame->move(0, 1);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(0, 1);
 
-    myGame->move(2, 1);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(2, 1);
 
-    myGame->move(0, 2);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(0, 2);
 
-    myGame->move(1, 0);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(1, 0);
 
-    myGame->move(1, 2);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(1, 2);
 
-    myGame->move(0, 2);
+    myGame.printGame();
 
-    myGame->printGame();
+    myGame.move(0, 2);
 
-    delete myGame;
+    myGame.printGame();
 }

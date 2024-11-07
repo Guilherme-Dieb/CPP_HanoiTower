@@ -1,4 +1,4 @@
-#include "header/ht_config.h"
+#include "header/ht_config.hpp"
 
 using namespace HanoiTower;
 

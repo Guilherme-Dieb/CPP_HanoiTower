@@ -4,8 +4,9 @@
 
 # Compiler settings - Can be customized.
 CC = g++
-CXXFLAGS = -std=c++11 -Wall
-LDFLAGS = 
+CXXFLAGS += -std=c++11 -Wall -g
+LDFLAGS =
+CDEFS +=
 
 # Makefile settings - Can be customized.
 APPNAME = HanoiTower

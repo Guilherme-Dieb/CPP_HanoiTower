@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 
-#include "ht_config.h"
+#include "ht_config.hpp"
+#include "debug.hpp"
 
 namespace HanoiTower
 {
@@ -18,7 +19,9 @@ namespace HanoiTower
             void setBottom(disk*);
 
             disk(int size);
-            disk(int seze, disk* top, disk* bottom);
+            disk(int size, disk* top, disk* bottom);
+
+            ~disk();
 
             void printSize();
 

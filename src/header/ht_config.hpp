@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "debug.hpp"
+
 namespace HanoiTower
 {
     class config

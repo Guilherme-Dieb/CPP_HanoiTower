@@ -18,16 +18,11 @@ game::game(int numberOfDisks)
 
     _towerMaxSize = numberOfDisks;
 
-    _towers.reserve(3);
+    _towers.reserve(_numberOfTowers);
 
     _towers.push_back(new tower(numberOfDisks));
-
     _towers.push_back(new tower());
-
     _towers.push_back(new tower());
-
-
-    std::cout<< _towers.size() <<std::endl;
 }
 
 //DESTRUCTOR
@@ -54,23 +49,42 @@ void game::printGame()
     std::cout << std::endl;
 }
 
-void HanoiTower::game::move(int origin, int destiny)
+void game::move(int origin, int destiny)
 {
-   if(origin < 0 || destiny < 0 || origin > _towers.size() - 1 || destiny > _towers.size() - 1 || origin == destiny)
-    {
-        std::cout << "Invalid Move!" << std::endl;
-        return;
-    }
+    _commands.loadAndExecuteCommand(_towers, origin, destiny);
+}
 
-    tower* originTower = _towers[origin];
+void game::addMove(int origin, int destiny)
+{
+    _commands.loadCommand(origin, destiny);
+}
 
-    if(originTower->getSize() <= 0)
-    {
-        std::cout << "Invalid Move! Origin Tower is Empty" << std::endl;
-        return;
-    }
+void game::executeAllMoves()
+{
+    _commands.executeAllCommands(_towers);
+}
 
-    tower* destinyTower = _towers[destiny];
+void game::executeMove()
+{
+    _commands.executeCurrentCommand(_towers);
+}
 
-    destinyTower->pushDisk(originTower->popDisk());
+void game::printComands()
+{
+    _commands.printCommands();
+}
+
+void game::changeMove(int origin, int destiny)
+{
+    _commands.overwriteCommand( origin, destiny );
+}
+
+void game::undoMove()
+{
+    _commands.undoCommand(_towers);
+}
+
+void game::undoAllMoves()
+{
+    _commands.undoAllCommands(_towers);
 }

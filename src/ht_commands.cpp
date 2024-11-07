@@ -1,4 +1,4 @@
-#include "header/ht_comands.hpp"
+#include "header/ht_commands.hpp"
 
 using namespace HanoiTower;
 
@@ -71,6 +71,7 @@ void commands::executeCommand(std::vector<tower*> towers, sCommand* command)
 
     if(!doesTowerExists(towers, origin) || !doesTowerExists(towers, destiny))
     {
+        debug::log("Invalid Comand: Tower " + std::to_string(origin) + " or Tower " + std::to_string(destiny) + " don't Exixt!");
         return;
     }
 
@@ -108,7 +109,104 @@ bool commands::executeCurrentCommand(std::vector<tower*> towers)
     return true;
 }
 
-void commands::executeAllCommand(std::vector<tower*> _towers)
+/// @brief 
+/// @param _towers 
+/// @return true if is able to execute the code 
+bool commands::executeAllCommands(std::vector<tower*> towers)
+{
+    if(!isCommandIDValid(_nextCommandID))
+    {
+        return false;
+    }
+
+    while (executeCurrentCommand(towers));
+
+    return false;
+}
+
+/// @brief 
+/// @param _towers 
+/// @param origin 
+/// @param destiny 
+/// @return false if it can't add or execute the command 
+bool commands::loadAndExecuteCommand(std::vector<tower*> towers, int origin, int destiny)
+{
+    if(!loadCommand(origin, destiny))
+    {
+        return false;
+    }
+
+    if(!executeCurrentCommand(towers))
+    {
+        return false;
+    }
+    
+    return true;
+}
+
+/// @brief 
+/// @param towers 
+/// @return false if it fails to undo
+bool commands::undoCommand(std::vector<tower*> towers)
+{
+    if(_nextCommandID == 0)
+    {
+        debug::log("No Command to Undo!");
+        return false;
+    }
+
+    sCommand* uCommand = new sCommand;
+
+    if(uCommand == nullptr)
+    {
+        debug::log("Failed to Create Undo Comand!");
+        return false;
+    }
+
+    _nextCommandID--;
+
+    sCommand* currentComand = _commands[_nextCommandID];
+
+    uCommand->destiny = currentComand->origin;
+    uCommand->origin = currentComand->destiny;
+
+    executeCommand(towers, uCommand);
+
+    return true;
+}
+
+bool commands::undoAllCommands(std::vector<tower*> towers)
+{
+    while (undoCommand(towers));
+}
+
+bool commands::overwriteCommand(int origin, int destiny)
 {
 
+    for(; _totalCommands >= _nextCommandID; _totalCommands--)
+    {
+        sCommand* c = _commands[_totalCommands];
+        _commands.pop_back();
+        delete c;
+    }
+
+    loadCommand(origin, destiny);
+}
+
+void commands::printCommands()
+{
+    debug::log("COMMANDS IN STACK - BEGIN");
+
+    for(int i = 0; i <= _totalCommands; i++)
+    {
+        sCommand* c = _commands[i];
+
+        std::string aux = "";
+        if(i == _nextCommandID){ aux = " *"; }
+
+        debug::log(std::to_string(c->origin) + " -> " + std::to_string(c->destiny) + aux);
+    }
+
+    debug::log("COMMANDS IN STACK - END");
+    
 }

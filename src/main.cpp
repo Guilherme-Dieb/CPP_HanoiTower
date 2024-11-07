@@ -10,31 +10,35 @@ int main(int, char**){
     HanoiTower::game myGame = HanoiTower::game(3);
     myGame.printGame();
 
-    myGame.move(0, 2);
+    myGame.addMove(0, 2);
 
     myGame.printGame();
 
-    myGame.move(0, 1);
+    myGame.addMove(0, 1);
 
+    myGame.addMove(2, 1);
+
+    myGame.addMove(0, 2);
+
+    myGame.addMove(1, 0);
+
+    myGame.addMove(1, 2);
+
+    myGame.addMove(0, 2);
+
+    myGame.executeAllMoves();
+
+    myGame.printComands();
+    
     myGame.printGame();
+    
+    myGame.undoMove();
 
-    myGame.move(2, 1);
+    myGame.undoAllMoves();
 
-    myGame.printGame();
+    myGame.printComands();
 
-    myGame.move(0, 2);
-
-    myGame.printGame();
-
-    myGame.move(1, 0);
-
-    myGame.printGame();
-
-    myGame.move(1, 2);
-
-    myGame.printGame();
-
-    myGame.move(0, 2);
+    //myGame.executeAllMoves();
 
     myGame.printGame();
 }

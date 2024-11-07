@@ -13,8 +13,17 @@ namespace HanoiTower
             ~commands();
 
             bool loadCommand(int origin, int destiny);
-            bool executeCurrentCommand(std::vector<tower*> _towers);
-            void executeAllCommand(std::vector<tower*> _towers);
+            bool loadAndExecuteCommand(std::vector<tower*> towers, int origin, int destiny);
+
+            bool overwriteCommand(int origin, int destiny);
+            
+            bool executeCurrentCommand(std::vector<tower*> towers);
+            bool executeAllCommands(std::vector<tower*> towers);
+
+            bool undoCommand(std::vector<tower*> towers);
+            bool undoAllCommands(std::vector<tower*> towers);
+
+            void printCommands();
 
         private:
             int _nextCommandID = 0;
@@ -24,11 +33,13 @@ namespace HanoiTower
                 public:
                     int origin;
                     int destiny;
+
+                    ~sCommand(){debug::log("Command Deleted");}
             };
             std::vector<sCommand*> _commands = {};
 
             void executeCommand(std::vector<tower*>, sCommand*);
             bool isCommandIDValid(int);
-            bool doesTowerExists(std::vector<tower*>, int towerID);
+            bool doesTowerExists(std::vector<tower*>, int);
     };
 }

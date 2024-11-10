@@ -126,6 +126,8 @@ void tower::fillTower(int size)
 
     _towerSize = 0;
 
+    //size--;
+
     for(;size > 0; size--)
     {
         pushDisk(new disk(size));

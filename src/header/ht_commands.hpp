@@ -15,13 +15,13 @@ namespace HanoiTower
             bool loadCommand(int origin, int destiny);
             bool loadAndExecuteCommand(std::vector<tower*> towers, int origin, int destiny);
 
-            bool overwriteCommand(int origin, int destiny);
+            void overwriteCommand(int origin, int destiny);
             
             bool executeCurrentCommand(std::vector<tower*> towers);
             bool executeAllCommands(std::vector<tower*> towers);
 
             bool undoCommand(std::vector<tower*> towers);
-            bool undoAllCommands(std::vector<tower*> towers);
+            void undoAllCommands(std::vector<tower*> towers);
 
             void printCommands();
 
@@ -41,5 +41,6 @@ namespace HanoiTower
             void executeCommand(std::vector<tower*>, sCommand*);
             bool isCommandIDValid(int);
             bool doesTowerExists(std::vector<tower*>, int);
+            bool canCommandBeExecuted(tower*, tower* );
     };
 }

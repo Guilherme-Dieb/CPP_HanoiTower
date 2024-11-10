@@ -51,7 +51,7 @@ bool commands::isCommandIDValid(int commandID)
 /// @return true if towerID is valid 
 bool commands::doesTowerExists(std::vector<tower*> towers, int towerID)
 {
-    if(towerID >= 0 && towerID < towers.size())
+    if(towerID >= 0 && towerID < (int)towers.size())
     {
         return true;
     }
@@ -85,6 +85,12 @@ void commands::executeCommand(std::vector<tower*> towers, sCommand* command)
 
     tower* destinyTower = towers[destiny];
 
+    if(!canCommandBeExecuted(originTower, destinyTower))
+    {
+        debug::log("Invalid Comand: Top Disk of Tower " + std::to_string(origin) + " is Bigger than Top Disk of Tower" + std::to_string(destiny) + "!");
+        return;
+    }
+
     destinyTower->pushDisk(originTower->popDisk());
 }
 
@@ -97,8 +103,6 @@ bool commands::executeCurrentCommand(std::vector<tower*> towers)
     {
         return false;
     }
-
-    int toExecuteCommandID = _nextCommandID + 1;
 
     sCommand* currentCommand = _commands[_nextCommandID];
 
@@ -175,12 +179,12 @@ bool commands::undoCommand(std::vector<tower*> towers)
     return true;
 }
 
-bool commands::undoAllCommands(std::vector<tower*> towers)
+void commands::undoAllCommands(std::vector<tower*> towers)
 {
     while (undoCommand(towers));
 }
 
-bool commands::overwriteCommand(int origin, int destiny)
+void commands::overwriteCommand(int origin, int destiny)
 {
 
     for(; _totalCommands >= _nextCommandID; _totalCommands--)
@@ -209,4 +213,11 @@ void commands::printCommands()
 
     debug::log("COMMANDS IN STACK - END");
     
+}
+
+bool commands::canCommandBeExecuted(tower* originTower, tower* destinyTower)
+{
+    if(destinyTower->getSize() == 0) { return true; }
+
+    return originTower->getTopDisk()->getSize() < destinyTower->getTopDisk()->getSize();
 }

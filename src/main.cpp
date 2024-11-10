@@ -11,6 +11,10 @@ int main(int, char**){
     myGame.printGame();
 
     myGame.addMove(0, 2);
+    myGame.executeMove();
+
+    myGame.addMove(0, 2);
+    myGame.executeMove();
 
     myGame.printGame();
 

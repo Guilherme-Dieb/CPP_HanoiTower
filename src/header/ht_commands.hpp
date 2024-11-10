@@ -1,29 +1,28 @@
 #pragma once
 
 #include <vector>
-#include <iostream>
 
 #include "ht_tower.hpp"
 #include "debug.hpp"
 
 namespace HanoiTower
 {
-    class commands{
+    class Commands{
         public:
-            ~commands();
+            ~Commands();
 
-            bool loadCommand(int origin, int destiny);
-            bool loadAndExecuteCommand(std::vector<tower*> towers, int origin, int destiny);
+            bool LoadCommand(int origin, int destiny);
+            bool LoadAndExecuteCommand(std::vector<Tower*> towers, int origin, int destiny);
 
-            void overwriteCommand(int origin, int destiny);
+            void OverwriteCommand(int origin, int destiny);
             
-            bool executeCurrentCommand(std::vector<tower*> towers);
-            bool executeAllCommands(std::vector<tower*> towers);
+            bool ExecuteCurrentCommand(std::vector<Tower*> towers);
+            bool ExecuteAllCommands(std::vector<Tower*> towers);
 
-            bool undoCommand(std::vector<tower*> towers);
-            void undoAllCommands(std::vector<tower*> towers);
+            bool UndoCommand(std::vector<Tower*> towers);
+            void UndoAllCommands(std::vector<Tower*> towers);
 
-            void printCommands();
+            void PrintCommands();
 
         private:
             int _nextCommandID = 0;
@@ -34,13 +33,13 @@ namespace HanoiTower
                     int origin;
                     int destiny;
 
-                    ~sCommand(){debug::log("Command Deleted");}
+                    ~sCommand(){Debug::Log("Command Deleted");}
             };
             std::vector<sCommand*> _commands = {};
 
-            void executeCommand(std::vector<tower*>, sCommand*);
-            bool isCommandIDValid(int);
-            bool doesTowerExists(std::vector<tower*>, int);
-            bool canCommandBeExecuted(tower*, tower* );
+            void ExecuteCommand(std::vector<Tower*>, sCommand*);
+            bool IsCommandIDValid(int);
+            bool DoesTowerExists(std::vector<Tower*>, int);
+            bool CanCommandBeExecuted(Tower*, Tower* );
     };
 }

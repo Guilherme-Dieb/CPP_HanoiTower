@@ -7,37 +7,37 @@
 
 namespace HanoiTower
 {
-    class tower
+    class Tower
     {
         public:
-            disk* getTopDisk();
-            disk* getBottomDisk();
-            int getSize();
+            Disk* GetTopDisk();
+            Disk* GetBottomDisk();
+            int GetSize();
 
-            tower();
-            tower(int size);
+            Tower();
+            Tower(int size);
 
-            ~tower();
+            ~Tower();
 
-            void pushDisk(disk* newDisk);
+            void PushDisk(Disk* newDisk);
 
-            disk* popDisk();
+            Disk* PopDisk();
 
-            void printTower();
+            void PrintTower();
 
-            void printSize();
+            void PrintSize();
 
-            bool isTowerEmpty();
+            bool IsTowerEmpty();
 
         private:
             int _towerSize;
-            disk* _topDisk;
-            disk* _bottomDisk;
+            Disk* _topDisk;
+            Disk* _bottomDisk;
 
-            void fillTower(int size);
+            void FillTower(int size);
 
-            void printStack(disk*);
+            void PrintStack(Disk*);
 
-            void destroyDisks(disk*); 
+            void DestroyDisks(Disk*); 
     };
 }

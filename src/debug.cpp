@@ -7,7 +7,7 @@
 #define LOG(x)
 #endif
 
-void debug::log(std::string msg)
+void Debug::Log(std::string msg)
 {
     
     LOG(msg);

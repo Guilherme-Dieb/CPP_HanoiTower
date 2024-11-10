@@ -2,7 +2,7 @@
 
 using namespace HanoiTower;
 
-analyzer::analyzer(int dataAmount)
+Analyzer::Analyzer(int dataAmount)
 {
     _dataAmount = dataAmount;
     data = new int[_dataAmount];
@@ -12,32 +12,32 @@ analyzer::analyzer(int dataAmount)
     }
 }
 
-analyzer::~analyzer()
+Analyzer::~Analyzer()
 {
     if( data != nullptr ){ delete []data; }
 }
 
-void analyzer::analyzeDisks(disk* _disk, int towerID)
+void Analyzer::AnalyzeDisks(Disk* _disk, int towerID)
 {
     if(_disk == nullptr) 
     {
-        debug::log("Data colection of Tower " + std::to_string(towerID) + " complete!");
+        Debug::Log("Data colection of Tower " + std::to_string(towerID) + " complete!");
         return;
     }
 
-    data[_disk->getSize()] = towerID;
+    data[_disk->GetSize()] = towerID;
 }
 
-void analyzer::analyze(std::vector<tower*> towers)
+void Analyzer::Analyze(std::vector<Tower*> towers)
 {
     int numberOfTowers = towers.size();
     for(int i = 0; i < numberOfTowers; i++)
     {
-        analyzeDisks(towers[i]->getTopDisk(), i);
+        AnalyzeDisks(towers[i]->GetTopDisk(), i);
     }
 }
 
-void analyzer::printData()
+void Analyzer::PrintData()
 {
     for(int i = 0; i < _dataAmount;);
 }

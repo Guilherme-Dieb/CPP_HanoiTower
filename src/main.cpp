@@ -5,44 +5,42 @@
 #include "header/ht_game.hpp"
 
 int main(int, char**){
-    debug::log("DEBUG VERSION\n");
+    Debug::Log("DEBUG VERSION\n");
 
-    HanoiTower::game myGame = HanoiTower::game(3);
-    myGame.printGame();
+    HanoiTower::Game myGame = HanoiTower::Game(3);
+    myGame.PrintGame();
 
-    myGame.addMove(0, 2);
-    myGame.executeMove();
+    myGame.AddMove(0, 2);
+    myGame.ExecuteMove();
 
-    myGame.addMove(0, 2);
-    myGame.executeMove();
+    myGame.AddMove(0, 2);
+    myGame.ExecuteMove();
 
-    myGame.printGame();
+    myGame.PrintGame();
 
-    myGame.addMove(0, 1);
+    myGame.AddMove(0, 1);
 
-    myGame.addMove(2, 1);
+    myGame.AddMove(2, 1);
 
-    myGame.addMove(0, 2);
+    myGame.AddMove(0, 2);
 
-    myGame.addMove(1, 0);
+    myGame.AddMove(1, 0);
 
-    myGame.addMove(1, 2);
+    myGame.AddMove(1, 2);
 
-    myGame.addMove(0, 2);
+    myGame.AddMove(0, 2);
 
-    myGame.executeAllMoves();
+    myGame.ExecuteAllMoves();
 
-    myGame.printComands();
+    myGame.PrintComands();
     
-    myGame.printGame();
+    myGame.PrintGame();
     
-    myGame.undoMove();
+    myGame.UndoMove();
 
-    myGame.undoAllMoves();
+    myGame.UndoAllMoves();
 
-    myGame.printComands();
+    myGame.PrintComands();
 
-    //myGame.executeAllMoves();
-
-    myGame.printGame();
+    myGame.PrintGame();
 }

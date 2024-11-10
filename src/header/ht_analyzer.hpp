@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <iostream>
 
 #include "ht_tower.hpp"
 #include "ht_disk.hpp"
@@ -9,19 +8,19 @@
 
 namespace HanoiTower
 {   
-    class analyzer
+    class Analyzer
     {
     public:
-        analyzer(int dataAmount);
-        ~analyzer();
+        Analyzer(int dataAmount);
+        ~Analyzer();
 
-        void analyze(std::vector<tower*> towers);
-        void printData();
+        void Analyze(std::vector<Tower*> towers);
+        void PrintData();
 
     private:
         int _dataAmount;
         int* data = nullptr;
 
-        void analyzeDisks(disk*, int);
+        void AnalyzeDisks(Disk*, int);
     };    
 }

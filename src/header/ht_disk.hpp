@@ -1,35 +1,32 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-
 #include "ht_config.hpp"
 #include "debug.hpp"
 
 namespace HanoiTower
 {
-    class disk
+    class Disk
     {
         public:
-            int getSize();
-            disk* getTop();
-            disk* getBottom();
+            int GetSize();
+            Disk* GetTop();
+            Disk* GetBottom();
 
-            void setTop(disk*);
-            void setBottom(disk*);
+            void SetTop(Disk*);
+            void SetBottom(Disk*);
 
-            disk(int size);
-            disk(int size, disk* top, disk* bottom);
+            Disk(int size);
+            Disk(int size, Disk* top, Disk* bottom);
 
-            ~disk();
+            ~Disk();
 
-            void printSize();
+            void PrintSize();
 
-            void printDisk();
+            void PrintDisk();
 
         private:
             int _diskSize;
-            disk* _topDisk;
-            disk* _bottomDisk;
+            Disk* _topDisk;
+            Disk* _bottomDisk;
     };
 }

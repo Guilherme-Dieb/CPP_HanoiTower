@@ -3,54 +3,54 @@
 using namespace HanoiTower;
 
 // Private
-config::config()
+Config::Config()
 {
     //TODO: make it possible to load config from a file
 }
 
-config &config::getInstance()
+Config &Config::GetInstance()
 {
-    static config instance;
+    static Config instance;
     return instance;
 }
 
-std::string config::iDiskPrefix()
+std::string Config::IDiskPrefix()
 {
     return _diskPrefix;
 }
 
-std::string config::iDiskSufix()
+std::string Config::IDiskSufix()
 {
     return _diskSufix;
 }
 
-std::string config::iTowerPrefix()
+std::string Config::ITowerPrefix()
 {
     return _towerPrefix;
 }
 
-std::string config::iTowerSufix()
+std::string Config::ITowerSufix()
 {
     return _towerSufix;
 }
 
 //Public
-std::string config::diskPrefix()
+std::string Config::DiskPrefix()
 {
-    return getInstance().iDiskPrefix();
+    return GetInstance().IDiskPrefix();
 }
 
-std::string config::diskSufix()
+std::string Config::DiskSufix()
 {
-    return getInstance().iDiskSufix();
+    return GetInstance().IDiskSufix();
 }
 
-std::string config::towerPrefix()
+std::string Config::TowerPrefix()
 {
-    return getInstance().iTowerPrefix();
+    return GetInstance().ITowerPrefix();
 }
 
-std::string config::towerSufix()
+std::string Config::TowerSufix()
 {
-    return getInstance().iTowerSufix();
+    return GetInstance().ITowerSufix();
 }

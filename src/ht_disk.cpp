@@ -3,60 +3,60 @@
 using namespace HanoiTower;
 
 //GETTERS
-int disk::getSize(){return _diskSize;}
+int Disk::GetSize(){return _diskSize;}
 
-disk* disk::getTop(){return _topDisk;}
+Disk* Disk::GetTop(){return _topDisk;}
 
-disk* disk::getBottom(){return _bottomDisk;}
+Disk* Disk::GetBottom(){return _bottomDisk;}
 
 //SETTERS
-void disk::setTop(disk* top)
+void Disk::SetTop(Disk* top)
 {
     _topDisk = top;
 }
 
-void disk::setBottom(disk* bottom)
+void Disk::SetBottom(Disk* bottom)
 {
     _bottomDisk = bottom;
 }
 
 //CONSTRUCTOR
-disk::disk(int size, disk* top, disk* bottom)
+Disk::Disk(int size, Disk* top, Disk* bottom)
 {
     if(size <= 0)
     {
-        debug::log("Disk Initialization Error! Size of Disks can't be negative");
+        Debug::Log("Disk Initialization Error! Size of Disks can't be negative");
     }
     _diskSize = size;
-    setTop(top);
-    setBottom(bottom);
+    SetTop(top);
+    SetBottom(bottom);
 }
 
-disk::disk(int size)
+Disk::Disk(int size)
 {
     if(size <= 0)
     {
-        debug::log("Initialization Error! Size of Disks can't be negative");
+        Debug::Log("Initialization Error! Size of Disks can't be negative");
     }
     _diskSize = size;
-    std::cout << "Disk Created: " << size << std::endl;
-    setTop(nullptr);
-    setBottom(nullptr);
+    Debug::Log("Disk Created: ");
+    SetTop(nullptr);
+    SetBottom(nullptr);
 }
 
 //DESTRUCTOR
-disk::~disk()
+Disk::~Disk()
 {
-    debug::log("Disk " + std::to_string(_diskSize) + " Destroyed");
+    Debug::Log("Disk " + std::to_string(_diskSize) + " Destroyed");
 }
 
 //FUNCTIONS
-void disk::printSize()
+void Disk::PrintSize()
 {
-    std::cout << _diskSize << std::endl;
+    Debug::Log(std::to_string(_diskSize));
 }
 
-void disk::printDisk()
+void Disk::PrintDisk()
 {
-    std::cout << config::diskPrefix() << _diskSize << config::diskSufix();
+    std::cout << Config::DiskPrefix() << _diskSize << Config::DiskSufix();
 }

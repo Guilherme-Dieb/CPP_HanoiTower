@@ -1,38 +1,35 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-
 #include "debug.hpp"
 
 namespace HanoiTower
 {
-    class config
+    class Config
     {
         public:
-            config(const config&) = delete;
+            Config(const Config&) = delete;
 
-            static std::string diskPrefix();
-            static std::string diskSufix();
+            static std::string DiskPrefix();
+            static std::string DiskSufix();
 
 
-            static std::string towerPrefix();
-            static std::string towerSufix();
+            static std::string TowerPrefix();
+            static std::string TowerSufix();
 
         private:
-            config();
-            static config& getInstance();
+            Config();
+            static Config& GetInstance();
 
             std::string _diskPrefix = " ";
             std::string _diskSufix = " ";
             std::string _towerPrefix = "[";
             std::string _towerSufix = "]\n";
 
-            std::string iDiskPrefix();
-            std::string iDiskSufix();
+            std::string IDiskPrefix();
+            std::string IDiskSufix();
 
-            std::string iTowerPrefix();
-            std::string iTowerSufix();
+            std::string ITowerPrefix();
+            std::string ITowerSufix();
             
     };
 }

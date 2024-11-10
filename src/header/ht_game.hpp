@@ -1,42 +1,39 @@
 #pragma once
 
-#include <vector>
-#include <iostream>
-
 #include "ht_tower.hpp"
 #include "ht_commands.hpp"
 #include "debug.hpp"
 
 namespace HanoiTower
 {
-    class game
+    class Game
     {
         public:
-            game(int numberOfDisks);
-            ~game();
+            Game(int numberOfDisks);
+            ~Game();
 
-            void printGame();
+            void PrintGame();
 
-            void move(int origin, int destiny);
+            void Move(int origin, int destiny);
 
-            void addMove(int origin, int destiny);
+            void AddMove(int origin, int destiny);
 
-            void changeMove(int origin, int destiny);
+            void ChangeMove(int origin, int destiny);
 
-            void executeMove();
-            void executeAllMoves();
+            void ExecuteMove();
+            void ExecuteAllMoves();
 
-            void undoMove();
-            void undoAllMoves();
+            void UndoMove();
+            void UndoAllMoves();
 
-            void printComands();
+            void PrintComands();
 
-            void autoSolve();
+            void AutoSolve();
         private:
             const int _numberOfTowers = 3;
             int _towerMaxSize;
 
-            std::vector<tower*> _towers = {};
-            HanoiTower::commands _commands = HanoiTower::commands();
+            std::vector<Tower*> _towers = {};
+            HanoiTower::Commands _commands = HanoiTower::Commands();
     };
 }

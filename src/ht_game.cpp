@@ -9,27 +9,27 @@ using namespace HanoiTower;
 
 
 //CONSTRUCTOR
-game::game(int numberOfDisks)
+Game::Game(int numberOfDisks)
 {
     if(numberOfDisks <= 0)
     {
-        std::cout << "Game Initialization Error! Invalid Number of Disks" << std::endl;
+        Debug::Log("Game Initialization Error! Invalid Number of Disks");
     }
 
     _towerMaxSize = numberOfDisks;
 
     _towers.reserve(_numberOfTowers);
 
-    _towers.push_back(new tower(numberOfDisks));
-    _towers.push_back(new tower());
-    _towers.push_back(new tower());
+    _towers.push_back(new Tower(numberOfDisks));
+    _towers.push_back(new Tower());
+    _towers.push_back(new Tower());
 }
 
 //DESTRUCTOR
-game::~game()
+Game::~Game()
 {
-    std::cout << "Game destroyed!" << std::endl;
-    for(tower* t:_towers)
+    Debug::Log("Game destroyed!");
+    for(Tower* t:_towers)
     {
         delete t;
     }
@@ -37,54 +37,54 @@ game::~game()
 
 
 //FUNCTIONS
-void game::printGame()
+void Game::PrintGame()
 {
     int towerNumber = 0;
-    for(tower* t:_towers)
+    for(Tower* t:_towers)
     {
         std::cout << towerNumber << " -> "; 
-        t->printTower();
+        t->PrintTower();
         towerNumber++;
     }
     std::cout << std::endl;
 }
 
-void game::move(int origin, int destiny)
+void Game::Move(int origin, int destiny)
 {
-    _commands.loadAndExecuteCommand(_towers, origin, destiny);
+    _commands.LoadAndExecuteCommand(_towers, origin, destiny);
 }
 
-void game::addMove(int origin, int destiny)
+void Game::AddMove(int origin, int destiny)
 {
-    _commands.loadCommand(origin, destiny);
+    _commands.LoadCommand(origin, destiny);
 }
 
-void game::executeAllMoves()
+void Game::ExecuteAllMoves()
 {
-    _commands.executeAllCommands(_towers);
+    _commands.ExecuteAllCommands(_towers);
 }
 
-void game::executeMove()
+void Game::ExecuteMove()
 {
-    _commands.executeCurrentCommand(_towers);
+    _commands.ExecuteCurrentCommand(_towers);
 }
 
-void game::printComands()
+void Game::PrintComands()
 {
-    _commands.printCommands();
+    _commands.PrintCommands();
 }
 
-void game::changeMove(int origin, int destiny)
+void Game::ChangeMove(int origin, int destiny)
 {
-    _commands.overwriteCommand( origin, destiny );
+    _commands.OverwriteCommand( origin, destiny );
 }
 
-void game::undoMove()
+void Game::UndoMove()
 {
-    _commands.undoCommand(_towers);
+    _commands.UndoCommand(_towers);
 }
 
-void game::undoAllMoves()
+void Game::UndoAllMoves()
 {
-    _commands.undoAllCommands(_towers);
+    _commands.UndoAllCommands(_towers);
 }

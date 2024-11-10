@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-namespace debug
+namespace Debug
 {
-    void log(std::string msg);
+    void Log(std::string msg);
 }

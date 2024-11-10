@@ -3,7 +3,7 @@
 using namespace HanoiTower;
 
 //DESTRUCTOR
-commands::~commands()
+Commands::~Commands()
 {
     for(sCommand* c:_commands)
     {
@@ -15,13 +15,13 @@ commands::~commands()
 /// @param origin 
 /// @param destiny 
 /// @return false if it fails to add the command 
-bool commands::loadCommand(int origin, int destiny)
+bool Commands::LoadCommand(int origin, int destiny)
 {
     sCommand* c = new sCommand;
 
     if(c == nullptr) 
     {
-        debug::log("Failed to Add Command");
+        Debug::Log("Failed to Add Command");
         return false;
     }
 
@@ -36,12 +36,12 @@ bool commands::loadCommand(int origin, int destiny)
 /// @brief 
 /// @param commandID 
 /// @return true if Command with commandID corresponds to a command that can be executed;
-bool commands::isCommandIDValid(int commandID)
+bool Commands::IsCommandIDValid(int commandID)
 {
     if(commandID <= _totalCommands && _nextCommandID >= 0) { return true; }
 
 
-    debug::log("Invalid Command ID");
+    Debug::Log("Invalid Command ID");
     return false;
 }
 
@@ -49,14 +49,14 @@ bool commands::isCommandIDValid(int commandID)
 /// @param _towers 
 /// @param towerID 
 /// @return true if towerID is valid 
-bool commands::doesTowerExists(std::vector<tower*> towers, int towerID)
+bool Commands::DoesTowerExists(std::vector<Tower*> towers, int towerID)
 {
     if(towerID >= 0 && towerID < (int)towers.size())
     {
         return true;
     }
 
-    debug::log("Tower " + std::to_string(towerID) + " don't Exist!");
+    Debug::Log("Tower " + std::to_string(towerID) + " don't Exist!");
     return false;
 }
 
@@ -64,49 +64,49 @@ bool commands::doesTowerExists(std::vector<tower*> towers, int towerID)
 /// @param _towers 
 /// @param command 
 /// @return false if the command is invalid 
-void commands::executeCommand(std::vector<tower*> towers, sCommand* command)
+void Commands::ExecuteCommand(std::vector<Tower*> towers, sCommand* command)
 {
     int origin = command->origin;
     int destiny = command->destiny;
 
-    if(!doesTowerExists(towers, origin) || !doesTowerExists(towers, destiny))
+    if(!DoesTowerExists(towers, origin) || !DoesTowerExists(towers, destiny))
     {
-        debug::log("Invalid Comand: Tower " + std::to_string(origin) + " or Tower " + std::to_string(destiny) + " don't Exixt!");
+        Debug::Log("Invalid Comand: Tower " + std::to_string(origin) + " or Tower " + std::to_string(destiny) + " don't Exixt!");
         return;
     }
 
-    tower* originTower = towers[origin];
+    Tower* originTower = towers[origin];
 
-    if(originTower->isTowerEmpty())
+    if(originTower->IsTowerEmpty())
     {
-        debug::log("Invalid Comand: Tower " + std::to_string(origin) + " is Empty!");
+        Debug::Log("Invalid Comand: Tower " + std::to_string(origin) + " is Empty!");
         return;
     }
 
-    tower* destinyTower = towers[destiny];
+    Tower* destinyTower = towers[destiny];
 
-    if(!canCommandBeExecuted(originTower, destinyTower))
+    if(!CanCommandBeExecuted(originTower, destinyTower))
     {
-        debug::log("Invalid Comand: Top Disk of Tower " + std::to_string(origin) + " is Bigger than Top Disk of Tower" + std::to_string(destiny) + "!");
+        Debug::Log("Invalid Comand: Top Disk of Tower " + std::to_string(origin) + " is Bigger than Top Disk of Tower" + std::to_string(destiny) + "!");
         return;
     }
 
-    destinyTower->pushDisk(originTower->popDisk());
+    destinyTower->PushDisk(originTower->PopDisk());
 }
 
 /// @brief 
 /// @param _towers 
 /// @return false if it fail's to execute the current command 
-bool commands::executeCurrentCommand(std::vector<tower*> towers)
+bool Commands::ExecuteCurrentCommand(std::vector<Tower*> towers)
 {
-    if(!isCommandIDValid(_nextCommandID))
+    if(!IsCommandIDValid(_nextCommandID))
     {
         return false;
     }
 
     sCommand* currentCommand = _commands[_nextCommandID];
 
-    executeCommand(towers, currentCommand);
+    ExecuteCommand(towers, currentCommand);
 
     _nextCommandID++;
 
@@ -116,14 +116,14 @@ bool commands::executeCurrentCommand(std::vector<tower*> towers)
 /// @brief 
 /// @param _towers 
 /// @return true if is able to execute the code 
-bool commands::executeAllCommands(std::vector<tower*> towers)
+bool Commands::ExecuteAllCommands(std::vector<Tower*> towers)
 {
-    if(!isCommandIDValid(_nextCommandID))
+    if(!IsCommandIDValid(_nextCommandID))
     {
         return false;
     }
 
-    while (executeCurrentCommand(towers));
+    while (ExecuteCurrentCommand(towers));
 
     return false;
 }
@@ -133,14 +133,14 @@ bool commands::executeAllCommands(std::vector<tower*> towers)
 /// @param origin 
 /// @param destiny 
 /// @return false if it can't add or execute the command 
-bool commands::loadAndExecuteCommand(std::vector<tower*> towers, int origin, int destiny)
+bool Commands::LoadAndExecuteCommand(std::vector<Tower*> towers, int origin, int destiny)
 {
-    if(!loadCommand(origin, destiny))
+    if(!LoadCommand(origin, destiny))
     {
         return false;
     }
 
-    if(!executeCurrentCommand(towers))
+    if(!ExecuteCurrentCommand(towers))
     {
         return false;
     }
@@ -151,11 +151,11 @@ bool commands::loadAndExecuteCommand(std::vector<tower*> towers, int origin, int
 /// @brief 
 /// @param towers 
 /// @return false if it fails to undo
-bool commands::undoCommand(std::vector<tower*> towers)
+bool Commands::UndoCommand(std::vector<Tower*> towers)
 {
     if(_nextCommandID == 0)
     {
-        debug::log("No Command to Undo!");
+        Debug::Log("No Command to Undo!");
         return false;
     }
 
@@ -163,7 +163,7 @@ bool commands::undoCommand(std::vector<tower*> towers)
 
     if(uCommand == nullptr)
     {
-        debug::log("Failed to Create Undo Comand!");
+        Debug::Log("Failed to Create Undo Comand!");
         return false;
     }
 
@@ -174,17 +174,17 @@ bool commands::undoCommand(std::vector<tower*> towers)
     uCommand->destiny = currentComand->origin;
     uCommand->origin = currentComand->destiny;
 
-    executeCommand(towers, uCommand);
+    ExecuteCommand(towers, uCommand);
 
     return true;
 }
 
-void commands::undoAllCommands(std::vector<tower*> towers)
+void Commands::UndoAllCommands(std::vector<Tower*> towers)
 {
-    while (undoCommand(towers));
+    while (UndoCommand(towers));
 }
 
-void commands::overwriteCommand(int origin, int destiny)
+void Commands::OverwriteCommand(int origin, int destiny)
 {
 
     for(; _totalCommands >= _nextCommandID; _totalCommands--)
@@ -194,12 +194,12 @@ void commands::overwriteCommand(int origin, int destiny)
         delete c;
     }
 
-    loadCommand(origin, destiny);
+    LoadCommand(origin, destiny);
 }
 
-void commands::printCommands()
+void Commands::PrintCommands()
 {
-    debug::log("COMMANDS IN STACK - BEGIN");
+    Debug::Log("COMMANDS IN STACK - BEGIN");
 
     for(int i = 0; i <= _totalCommands; i++)
     {
@@ -208,16 +208,16 @@ void commands::printCommands()
         std::string aux = "";
         if(i == _nextCommandID){ aux = " *"; }
 
-        debug::log(std::to_string(c->origin) + " -> " + std::to_string(c->destiny) + aux);
+        Debug::Log(std::to_string(c->origin) + " -> " + std::to_string(c->destiny) + aux);
     }
 
-    debug::log("COMMANDS IN STACK - END");
+    Debug::Log("COMMANDS IN STACK - END");
     
 }
 
-bool commands::canCommandBeExecuted(tower* originTower, tower* destinyTower)
+bool Commands::CanCommandBeExecuted(Tower* originTower, Tower* destinyTower)
 {
-    if(destinyTower->getSize() == 0) { return true; }
+    if(destinyTower->GetSize() == 0) { return true; }
 
-    return originTower->getTopDisk()->getSize() < destinyTower->getTopDisk()->getSize();
+    return originTower->GetTopDisk()->GetSize() < destinyTower->GetTopDisk()->GetSize();
 }

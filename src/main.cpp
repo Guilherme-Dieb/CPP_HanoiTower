@@ -1,7 +1,3 @@
-#include <iostream>
-
-#include "header/ht_disk.hpp"
-#include "header/ht_tower.hpp"
 #include "header/ht_game.hpp"
 
 int main(int, char**){

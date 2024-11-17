@@ -8,9 +8,7 @@ Disk* Tower::GetBottomDisk(){ return _bottomDisk; }
 //CONTRUCTOR
 Tower::Tower()
 {
-    _towerSize = 0;
-    _topDisk = nullptr;
-    _bottomDisk = nullptr;
+    Initialize();
 }
 
 Tower::Tower(int size)
@@ -27,11 +25,18 @@ Tower::Tower(int size)
 //DESTRUCTOR
 Tower::~Tower()
 {
-    DestroyDisks(_topDisk);
+    DestroyDisksFromTop(_topDisk);
     Debug::Log("tower destroyed");
 }
 
 //FUNCTIONS
+void Tower::Initialize()
+{
+    _towerSize = 0;
+    _topDisk = nullptr;
+    _bottomDisk = nullptr;
+}
+
 void Tower::PushDisk(Disk * diskToAdd)
 {
     if(diskToAdd == nullptr)
@@ -106,10 +111,8 @@ void Tower::PrintTower()
     std::cout << Config::TowerSufix();
 }
 
-void Tower::DestroyDisks(Disk* detsroyDisk)
-{    
-    if(detsroyDisk == nullptr){ return; }
-
+void Tower::DestroyDisksFromTop(Disk* detsroyDisk)
+{
     Disk* current = detsroyDisk;
 
     while(current!=nullptr)
@@ -118,6 +121,13 @@ void Tower::DestroyDisks(Disk* detsroyDisk)
         current = current->GetBottom();
         delete toDestroy;
     }
+}
+
+void Tower::FlushTower()
+{
+    DestroyDisksFromTop(_topDisk);
+
+    Initialize();
 }
 
 void Tower::FillTower(int size)

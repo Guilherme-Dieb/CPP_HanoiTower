@@ -29,15 +29,19 @@ namespace HanoiTower
 
             bool IsTowerEmpty();
 
+            void FlushTower();
+
+            void FillTower(int size);
+
         private:
             int _towerSize;
             Disk* _topDisk;
             Disk* _bottomDisk;
 
-            void FillTower(int size);
+            void Initialize();
 
             void PrintStack(Disk*);
 
-            void DestroyDisks(Disk*); 
+            void DestroyDisksFromTop(Disk*); 
     };
 }

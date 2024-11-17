@@ -23,6 +23,7 @@ namespace HanoiTower
             void UndoAllCommands(std::vector<Tower*> towers);
 
             void PrintCommands();
+            void FlushCommands();
 
         private:
             int _nextCommandID = 0;

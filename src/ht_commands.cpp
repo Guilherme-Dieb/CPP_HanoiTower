@@ -5,10 +5,7 @@ using namespace HanoiTower;
 //DESTRUCTOR
 Commands::~Commands()
 {
-    for(sCommand* c:_commands)
-    {
-        delete c;
-    }
+    FlushCommands();
 }
 
 /// @brief 
@@ -208,11 +205,24 @@ void Commands::PrintCommands()
         std::string aux = "";
         if(i == _nextCommandID){ aux = " *"; }
 
-        Debug::Log(std::to_string(c->origin) + " -> " + std::to_string(c->destiny) + aux);
+        Debug::Log(std::to_string(c->origin) + Config::TowerIDtoPrintConnector() + std::to_string(c->destiny) + aux);
     }
 
     Debug::Log("COMMANDS IN STACK - END");
     
+}
+
+void Commands::FlushCommands()
+{
+    for(sCommand* c:_commands)
+    {
+        delete c;
+    }
+
+    _commands.clear();
+
+    _nextCommandID = 0;
+    _totalCommands = -1;
 }
 
 bool Commands::CanCommandBeExecuted(Tower* originTower, Tower* destinyTower)

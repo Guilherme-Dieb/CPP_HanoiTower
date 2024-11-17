@@ -34,6 +34,41 @@ std::string Config::ITowerSufix()
     return _towerSufix;
 }
 
+std::string Config::ITowerIDtoPrintConnector()
+{
+    return _towerIDtoPrintConnector;
+}
+
+char Config::IBackSpace()
+{
+    return _backSpace;
+}
+
+char Config::IYes()
+{
+    return _yes;
+}
+
+char Config::INo()
+{
+    return _no;
+}
+
+char Config::IEnter()
+{
+    return _enter;
+}
+
+char Config::IQuit()
+{
+    return _quit;
+}
+
+char Config::IAuto()
+{
+    return _auto;
+}
+
 //Public
 std::string Config::DiskPrefix()
 {
@@ -53,4 +88,39 @@ std::string Config::TowerPrefix()
 std::string Config::TowerSufix()
 {
     return GetInstance().ITowerSufix();
+}
+
+std::string Config::TowerIDtoPrintConnector()
+{
+    return GetInstance().ITowerIDtoPrintConnector();
+}
+
+char Config::BackSpace()
+{
+    return GetInstance().IBackSpace();
+}
+
+char Config::Yes()
+{
+    return GetInstance().IYes();
+}
+
+char Config::No()
+{
+    return GetInstance().INo();
+}
+
+char Config::Enter()
+{
+    return GetInstance().IEnter();
+}
+
+char Config::Quit()
+{
+    return GetInstance().IQuit();
+}
+
+char Config::Auto()
+{
+    return GetInstance().IAuto();
 }

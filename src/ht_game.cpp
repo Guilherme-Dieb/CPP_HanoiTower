@@ -82,7 +82,7 @@ void Game::Run()
 void Game::Continue()
 {
     Debug::Log("CONTINUE SCREEN");
-    DoYouWishToPlayAgain();
+    DoYouWishToPlayAgainScreen();
 }
 
 void Game::Initialize()
@@ -97,13 +97,35 @@ void Game::Update()
     UpdateScreen();
 }
 
-void Game::End()
+void Game::Auto()
 {
-    Debug::Log("END/p SCREEN");
-    isRunning = !AreYouSureYouWantToQuit();
+    Debug::Log("AUTO SCREEN");
+    AutoSolveScreen();
 }
 
-void Game::DoYouWishToPlayAgain()
+void Game::End()
+{
+    Debug::Log("END SCREEN");
+    isRunning = !AreYouSureYouWantToQuitScreen();
+}
+
+void Game::AutoSolveScreen()
+{
+    Debug::Log("Are You Sure You Want To Auto Solve? (" + std::string(1, Config::Yes()) + " - Yes / " + std::string(1, Config::No()) + " - No))");
+    char character = InputManager::GetChar();
+
+    if(character == Config::Yes())
+    {
+        Analyze();
+    }
+
+    if(character == Config::No())
+    {
+        ChangeGameState(_previousGameState);
+    }
+}
+
+void Game::DoYouWishToPlayAgainScreen()
 {
     Debug::Log("Do You Wish To Play Again? (" + std::string(1, Config::Yes()) + " - Yes / " + std::string(1, Config::No()) + " - No))");
     char character = InputManager::GetChar();
@@ -207,7 +229,7 @@ void Game::UpdateScreen()
     Move(origin, destiny);
 }
 
-bool Game::AreYouSureYouWantToQuit()
+bool Game::AreYouSureYouWantToQuitScreen()
 {
      Debug::Log("Are You Sure You Want to Quit? (" + std::string(1, Config::Yes()) + " - Yes / " + std::string(1, Config::No()) + " - No))");
     char character = InputManager::GetChar();

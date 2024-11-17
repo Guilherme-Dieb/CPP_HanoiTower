@@ -63,8 +63,9 @@ namespace HanoiTower
 
             void UpdateScreen();
             void InitializationScreen();
-            void DoYouWishToPlayAgain();
-            bool AreYouSureYouWantToQuit();
+            void DoYouWishToPlayAgainScreen();
+            void AutoSolveScreen();
+            bool AreYouSureYouWantToQuitScreen();
 
             void ChangeGameState(GameState);
 

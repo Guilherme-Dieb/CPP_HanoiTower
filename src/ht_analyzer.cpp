@@ -19,26 +19,21 @@ Analyzer::~Analyzer()
 
 void Analyzer::AnalyzeDisks(Disk* disk, int towerID)
 {
-    if(disk == nullptr) 
-    {
-        Debug::Log("Data colection of Tower " + std::to_string(towerID) + " complete!");
-        return;
-    }
-
     Disk * currentDisk = disk;
 
-    do
+    while (currentDisk != nullptr)
     {
-    data[currentDisk->GetSize()-1] = towerID;
-    currentDisk = currentDisk->GetBottom();
+        data[currentDisk->GetSize()-1] = towerID;
+        currentDisk = currentDisk->GetBottom();
+    }
 
-    }while (currentDisk != nullptr);
-    
+    Debug::Log("Data Aquisition of Tower " + std::to_string(towerID) + " complete!");
 }
 
 void Analyzer::Analyze(std::vector<Tower*> towers)
 {
     int numberOfTowers = towers.size();
+    Debug::Log("\n");
     for(int i = 0; i < numberOfTowers; i++)
     {
         AnalyzeDisks(towers[i]->GetTopDisk(), i);
@@ -49,7 +44,7 @@ void Analyzer::LoadCommands(Commands* commands, int origin, int aux, int destiny
 {
     if(dataID < 0)
     {
-        Debug::Log("Analyzes Finished!");
+        Debug::Log("\nAll Commands Loaded!");
         return;
     }
 
@@ -83,7 +78,6 @@ void Analyzer::GenericLoadCommands(Commands* commands, int origin, int aux, int 
 {
     if(dataID < 0)
     {
-        Debug::Log("Analyzes Finished!");
         return;
     }
 

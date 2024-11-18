@@ -15,26 +15,6 @@ namespace HanoiTower
             ~Game();
 
             void Run();
-
-            void PrintTowers();
-
-            void Move(int origin, int destiny);
-
-            void AddMove(int origin, int destiny);
-
-            void ChangeMove(int origin, int destiny);
-
-            void ExecuteMove();
-            void ExecuteAllMoves();
-
-            void UndoMove();
-            void UndoAllMoves();
-
-            void PrintComands();
-
-            void Analyze();
-
-            void AutoSolve();
             
         private:
             enum GameState
@@ -49,7 +29,8 @@ namespace HanoiTower
 
             const int _numberOfTowers = 3;
             int _towerMaxSize;
-            bool isRunning;
+            bool _isRunning;
+            bool _areCommandsHidden;
 
             std::vector<Tower*> _towers = {};
             Commands _commands;
@@ -60,14 +41,20 @@ namespace HanoiTower
             bool IsNumberOfDisksValid(int);
             bool IsTowerIDValid(int);
             bool HasThePlayerWon();
-
+            
             void UpdateScreen();
             void InitializationScreen();
             void DoYouWishToPlayAgainScreen();
             void AutoSolveScreen();
             bool AreYouSureYouWantToQuitScreen();
 
+            void ToggleCommandsVisibility();
+
             void ChangeGameState(GameState);
+
+            void PrintCommands();
+            void PrintTowers();
+            void AutoSolve();
 
             void Continue();
             void Initialize();

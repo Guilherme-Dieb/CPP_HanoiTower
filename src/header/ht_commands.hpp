@@ -18,6 +18,7 @@ namespace HanoiTower
             
             bool ExecuteCurrentCommand(std::vector<Tower*> towers);
             bool ExecuteAllCommands(std::vector<Tower*> towers);
+            bool ExecuteAndPrintAllCommands(std::vector<Tower*> towers);
 
             bool UndoCommand(std::vector<Tower*> towers);
             void UndoAllCommands(std::vector<Tower*> towers);
@@ -42,5 +43,6 @@ namespace HanoiTower
             bool IsCommandIDValid(int);
             bool DoesTowerExists(std::vector<Tower*>, int);
             bool CanCommandBeExecuted(Tower*, Tower* );
+            bool PrintCommand(int commandID);
     };
 }

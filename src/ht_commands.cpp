@@ -35,10 +35,8 @@ bool Commands::LoadCommand(int origin, int destiny)
 /// @return true if Command with commandID corresponds to a command that can be executed;
 bool Commands::IsCommandIDValid(int commandID)
 {
-    if(commandID <= _totalCommands && _nextCommandID >= 0) { return true; }
+    if(commandID <= _totalCommands && commandID >= 0) { return true; }
 
-
-    Debug::Log("Invalid Command ID");
     return false;
 }
 
@@ -110,19 +108,52 @@ bool Commands::ExecuteCurrentCommand(std::vector<Tower*> towers)
     return true;
 }
 
+bool Commands::PrintCommand(int commandID)
+{
+    if(!IsCommandIDValid(commandID))
+    {
+        return false;
+    }
+
+    sCommand* c = _commands[commandID];
+
+    Debug::Print("Command " + std::to_string(commandID) + ": "+ std::to_string(c->origin) + Config::TowerIDtoPrintConnector() + std::to_string(c->destiny));
+
+    return true;
+}
+
+/// @brief 
+/// @param _towers 
+/// @return true if is able to execute the code 
+bool Commands::ExecuteAndPrintAllCommands(std::vector<Tower*> towers)
+{
+    do
+    {
+        Debug::Log("------------------");
+        PrintCommand(_nextCommandID - 1);
+        Debug::Log("\n------------------");
+
+        int towerNumber = 0;
+        for(Tower* t:towers)
+        {
+            Debug::Print(std::to_string(towerNumber) + Config::TowerIDtoPrintConnector());
+            t->PrintTower();
+            towerNumber++;
+        }
+    }
+    while (ExecuteCurrentCommand(towers));
+
+    return true;
+}
+
 /// @brief 
 /// @param _towers 
 /// @return true if is able to execute the code 
 bool Commands::ExecuteAllCommands(std::vector<Tower*> towers)
 {
-    if(!IsCommandIDValid(_nextCommandID))
-    {
-        return false;
-    }
-
     while (ExecuteCurrentCommand(towers));
 
-    return false;
+    return true;
 }
 
 /// @brief 
@@ -198,18 +229,17 @@ void Commands::PrintCommands()
 {
     Debug::Log("COMMANDS IN STACK - BEGIN");
 
-    for(int i = 0; i <= _totalCommands; i++)
+    int i = 0;
+    while (PrintCommand(i))
     {
-        sCommand* c = _commands[i];
-
         std::string aux = "";
         if(i == _nextCommandID){ aux = " *"; }
 
-        Debug::Log(std::to_string(c->origin) + Config::TowerIDtoPrintConnector() + std::to_string(c->destiny) + aux);
+        Debug::Log(aux);
+        i++;
     }
 
     Debug::Log("COMMANDS IN STACK - END");
-    
 }
 
 void Commands::FlushCommands()

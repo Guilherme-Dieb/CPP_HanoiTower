@@ -4,7 +4,7 @@
 
 #define DEBUGMODE = 1
 #if defined(DEBUGMODE) == 1
-#define LOG(x) std::cout<<x<<std::endl
+#define LOG(x) std::cout<<x<<"\n"
 #define PRINT(x) std::cout<<x
 #define CLEAR() std::system("clear")
 #define TOOGLETERMINALCONFIG() struct termios settings; tcgetattr(STDIN_FILENO, &settings); settings.c_lflag &= (~ICANON); tcsetattr(STDIN_FILENO, TCSANOW, &settings);

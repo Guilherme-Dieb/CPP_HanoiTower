@@ -21,6 +21,9 @@ Game::Game()
 
     _previousGameState = NOSTATE;
     _gameState = INITIALIZE;
+
+    _areCommandsHidden = false;
+    _isRunning = true;
 }
 
 //DESTRUCTOR
@@ -51,9 +54,7 @@ void Game::InitializeTowers(int numberOfDisks)
 
 void Game::Run()
 {
-    isRunning = true;
-
-    while (isRunning)
+    while (_isRunning)
     {
         Debug::Clear();
         switch (_gameState)
@@ -68,7 +69,7 @@ void Game::Run()
             Update();
             break;
         case AUTO:
-
+            Auto();
             break;
         case END:
             End();
@@ -106,7 +107,7 @@ void Game::Auto()
 void Game::End()
 {
     Debug::Log("END SCREEN");
-    isRunning = !AreYouSureYouWantToQuitScreen();
+    _isRunning = !AreYouSureYouWantToQuitScreen();
 }
 
 void Game::AutoSolveScreen()
@@ -116,7 +117,8 @@ void Game::AutoSolveScreen()
 
     if(character == Config::Yes())
     {
-        Analyze();
+        AutoSolve();
+        ChangeGameState(CONTINUE);
     }
 
     if(character == Config::No())
@@ -172,39 +174,60 @@ void Game::InitializationScreen()
     ChangeGameState(UPDATE);
 }
 
+void Game::PrintCommands()
+{
+    if(_areCommandsHidden)
+    {
+        _commands.PrintCommands();
+    }
+}
+
 void Game::UpdateScreen()
 {
-    char character = '0';
     int origin = -1;
     int destiny = -1;
 
-    PrintComands();
+    bool hasThePlayerWon = HasThePlayerWon();
 
+    PrintCommands();
+    
     PrintTowers();
 
-    if(HasThePlayerWon())
+    if(hasThePlayerWon)
     {
         Debug::Log("You Have Won! Press Anything To Continue!");
-        InputManager::GetChar();
+    }else
+    {
+        Debug::Log("Use towers ID's to move disks! (a - to solve; q - to quit the game; h - to toggle commands visibility)");
+    }
+
+    char input = InputManager::GetChar();
+
+    if(hasThePlayerWon)
+    {
         ChangeGameState(CONTINUE);
         return;
     }
 
-    character = InputManager::GetChar();
-
-    if(character == Config::Quit())
+    if(input == Config::Quit())
     {
         ChangeGameState(END);
         return;
     }
 
-    if(character == Config::Auto())
+    if(input == Config::Auto())
     {
         ChangeGameState(AUTO);
         return;
     }
 
-    origin = InputManager::GetInt(character);
+    if(input == Config::Hide())
+    {
+        ToggleCommandsVisibility();
+        return;
+    }
+
+    origin = InputManager::GetInt(input);
 
     if(!IsTowerIDValid(origin))
     {
@@ -215,9 +238,9 @@ void Game::UpdateScreen()
 
     Debug::Print(Config::TowerIDtoPrintConnector());
 
-    character = InputManager::GetChar();
+    input = InputManager::GetChar();
 
-    destiny = InputManager::GetInt(character);
+    destiny = InputManager::GetInt(input);
 
     if(!IsTowerIDValid(destiny))
     {
@@ -226,7 +249,7 @@ void Game::UpdateScreen()
         return;
     }
 
-    Move(origin, destiny);
+    _commands.LoadAndExecuteCommand(_towers, origin, destiny);
 }
 
 bool Game::AreYouSureYouWantToQuitScreen()
@@ -236,6 +259,7 @@ bool Game::AreYouSureYouWantToQuitScreen()
 
     if(character == Config::Yes())
     {
+        Debug::Log("\n");
         return true;
     }
 
@@ -288,53 +312,19 @@ bool Game::HasThePlayerWon()
     return (_towers[DESTINYTOWER]->GetSize() == _towerMaxSize);
 }
 
-void Game::Move(int origin, int destiny)
+void Game::ToggleCommandsVisibility()
 {
-    _commands.LoadAndExecuteCommand(_towers, origin, destiny);
+    _areCommandsHidden = !_areCommandsHidden;
 }
 
-void Game::AddMove(int origin, int destiny)
-{
-    _commands.LoadCommand(origin, destiny);
-}
-
-void Game::ExecuteAllMoves()
-{
-    _commands.ExecuteAllCommands(_towers);
-}
-
-void Game::ExecuteMove()
-{
-    _commands.ExecuteCurrentCommand(_towers);
-}
-
-void Game::PrintComands()
-{
-    _commands.PrintCommands();
-}
-
-void Game::ChangeMove(int origin, int destiny)
-{
-    _commands.OverwriteCommand( origin, destiny );
-}
-
-void Game::UndoMove()
-{
-    _commands.UndoCommand(_towers);
-}
-
-void Game::UndoAllMoves()
-{
-    _commands.UndoAllCommands(_towers);
-}
-
-void Game::Analyze()
+void Game::AutoSolve()
 {
     Analyzer analyzer = Analyzer(_towerMaxSize);
     analyzer.Analyze(_towers);
-    analyzer.PrintData();
     analyzer.GenerateSolution(&_commands);
     analyzer.PrintData();
-    _commands.PrintCommands();
-    _commands.ExecuteAllCommands(_towers);
+    PrintCommands();
+    _commands.ExecuteAndPrintAllCommands(_towers);
+    Debug::Log("\nGame Solved! Press Any Key To Continue!");
+    InputManager::GetChar();
 }

@@ -69,6 +69,11 @@ char Config::IAuto()
     return _auto;
 }
 
+char Config::IHide()
+{
+    return _hide;
+}
+
 //Public
 std::string Config::DiskPrefix()
 {
@@ -123,4 +128,9 @@ char Config::Quit()
 char Config::Auto()
 {
     return GetInstance().IAuto();
+}
+
+char Config::Hide()
+{
+    return GetInstance().IHide();
 }

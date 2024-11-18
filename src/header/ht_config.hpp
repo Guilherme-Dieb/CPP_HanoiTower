@@ -23,6 +23,7 @@ namespace HanoiTower
             static char Enter();
             static char Quit();
             static char Auto();
+            static char Hide();
 
         private:
             Config();
@@ -40,6 +41,7 @@ namespace HanoiTower
             char _enter = '\n';
             char _quit = 'q';
             char _auto = 'a';
+            char _hide = 'h';
 
             std::string IDiskPrefix();
             std::string IDiskSufix();
@@ -54,5 +56,6 @@ namespace HanoiTower
             char IEnter();
             char IQuit();
             char IAuto();
+            char IHide();
     };
 }
